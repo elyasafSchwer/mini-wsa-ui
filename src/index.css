@@ -1,0 +1,78 @@
+@import 'tailwindcss';
+
+/* Dark mode driven by a .dark class on <html> (toggled by ThemeToggle),
+   rather than the OS preference, so users can override. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Design tokens. Semantic names map to CSS vars so both themes share one
+   Tailwind color scale (e.g. bg-surface, text-muted, border-default). */
+@theme {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border-default: var(--border);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-fg);
+
+  /* Threat / severity + action semantic colors */
+  --color-sev-low: #22c55e;
+  --color-sev-medium: #eab308;
+  --color-sev-high: #f97316;
+  --color-sev-critical: #ef4444;
+
+  --color-action-monitor: #64748b;
+  --color-action-alert: #eab308;
+  --color-action-deny: #ef4444;
+
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+}
+
+/* Light theme (default) */
+:root {
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --surface-2: #f1f5f9;
+  --border: #e2e8f0;
+  --fg: #0f172a;
+  --muted: #64748b;
+  --accent: #6366f1;
+  --accent-fg: #ffffff;
+  color-scheme: light;
+}
+
+/* Dark theme */
+.dark {
+  --bg: #0b0e14;
+  --surface: #131722;
+  --surface-2: #1c2230;
+  --border: #262d3d;
+  --fg: #e6edf3;
+  --muted: #8b95a7;
+  --accent: #6366f1;
+  --accent-fg: #ffffff;
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Thin, theme-aware scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
