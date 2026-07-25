@@ -66,6 +66,34 @@ export function FilterBar({ scope }: { scope: 'overview' | 'explorer' }) {
               className="w-36"
             />
           </Field>
+
+          <Field label="Client IP">
+            <Input
+              type="text"
+              inputMode="numeric"
+              placeholder="e.g. 3.89.35.54"
+              value={filters.clientIp ?? ''}
+              onChange={(e) => setFilter({ clientIp: e.target.value.trim() || undefined })}
+              className="w-44"
+            />
+          </Field>
+
+          <Field label="Repeat Offender">
+            <Select
+              value={filters.repeatOffender === undefined ? '' : String(filters.repeatOffender)}
+              onChange={(e) =>
+                setFilter({
+                  repeatOffender: e.target.value === '' ? undefined : e.target.value === 'true',
+                })
+              }
+              options={[
+                { label: 'All', value: '' },
+                { label: 'Repeat offenders', value: 'true' },
+                { label: 'First-time only', value: 'false' },
+              ]}
+              className="w-40"
+            />
+          </Field>
         </>
       )}
 

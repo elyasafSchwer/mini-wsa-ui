@@ -14,6 +14,8 @@ export const eventsService = {
       to: filters.to,
       category: filters.category,
       action: filters.action,
+      clientIp: filters.clientIp,
+      repeatOffender: filters.repeatOffender,
       limit: filters.limit,
       offset: filters.offset,
     })

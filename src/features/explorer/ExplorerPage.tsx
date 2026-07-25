@@ -11,7 +11,7 @@ import { formatNumber } from '@/lib/format'
 const PAGE_SIZE = 25
 
 export function ExplorerPage() {
-  const { filters } = useFilters()
+  const { filters, setFilter } = useFilters()
   const [searchParams, setSearchParams] = useSearchParams()
   const offset = Number(searchParams.get('offset') ?? 0)
 
@@ -51,6 +51,7 @@ export function ExplorerPage() {
               <EventSamplesTable
                 events={query.data?.items}
                 isLoading={query.isLoading}
+                onFilterIp={(ip) => setFilter({ clientIp: ip })}
               />
               {query.data && query.data.total > 0 && (
                 <Pagination

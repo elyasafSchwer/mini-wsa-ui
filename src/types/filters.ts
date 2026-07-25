@@ -21,6 +21,10 @@ export interface StatsFilters {
 export interface SampleFilters extends StatsFilters {
   category?: RuleCategory
   action?: RuleAction
+  /** Exact client IP to match. */
+  clientIp?: string
+  /** true = only repeat offenders, false = only first-time, undefined = all. */
+  repeatOffender?: boolean
   limit?: number
   offset?: number
 }

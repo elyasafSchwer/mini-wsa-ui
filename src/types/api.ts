@@ -108,6 +108,11 @@ export interface GenerateResponse {
   }
 }
 
+/** POST /api/dev/clear (dev only) — deletes all events from the index. */
+export interface ClearResponse {
+  deleted: number
+}
+
 /** Normalized error shape the API returns as `{ message }` on 4xx. */
 export interface ApiErrorBody {
   message?: string

@@ -23,6 +23,12 @@ function parseEnum<T extends string>(v: string | null, allowed: readonly T[]): T
   return v && (allowed as readonly string[]).includes(v) ? (v as T) : undefined
 }
 
+function parseBool(v: string | null): boolean | undefined {
+  if (v === 'true') return true
+  if (v === 'false') return false
+  return undefined
+}
+
 export function useFilters() {
   const [searchParams, setSearchParams] = useSearchParams()
 
@@ -33,6 +39,8 @@ export function useFilters() {
       to: searchParams.get('to') ?? undefined,
       category: parseEnum<RuleCategory>(searchParams.get('category'), CATEGORIES),
       action: parseEnum<RuleAction>(searchParams.get('action'), ACTIONS),
+      clientIp: searchParams.get('clientIp') ?? undefined,
+      repeatOffender: parseBool(searchParams.get('repeatOffender')),
     }),
     [searchParams],
   )

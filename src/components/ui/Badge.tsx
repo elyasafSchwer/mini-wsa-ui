@@ -47,3 +47,17 @@ export function Badge({ children, className }: { children: React.ReactNode; clas
     </span>
   )
 }
+
+/** Repeat-offender indicator: a red "Repeat" pill, or a muted dash otherwise. */
+export function RepeatOffenderBadge({ value }: { value: boolean }) {
+  if (!value) return <span className="text-xs text-muted/50">—</span>
+  return (
+    <span
+      title="Client flagged as a repeat offender"
+      className="inline-flex items-center gap-1 rounded-full bg-action-deny/15 px-2 py-0.5 text-xs font-medium text-action-deny"
+    >
+      <span className="inline-block h-1.5 w-1.5 rounded-full bg-action-deny" />
+      Repeat
+    </span>
+  )
+}

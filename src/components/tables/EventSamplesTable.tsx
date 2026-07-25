@@ -2,7 +2,13 @@ import type { EventSample } from '@/types/api'
 import { Table, THead, TBody, TR, TH, TD } from '@/components/ui/Table'
 import { Skeleton } from '@/components/ui/Skeleton'
 import { EmptyState } from '@/components/ui/EmptyState'
-import { CategoryBadge, ActionBadge, SeverityBadge, Badge } from '@/components/ui/Badge'
+import {
+  CategoryBadge,
+  ActionBadge,
+  SeverityBadge,
+  Badge,
+  RepeatOffenderBadge,
+} from '@/components/ui/Badge'
 import { formatTimestamp } from '@/lib/format'
 import { cn } from '@/lib/cn'
 
@@ -13,14 +19,17 @@ function statusColor(code: number): string {
   return 'text-sev-low'
 }
 
-const COLS = 9
+const COLS = 10
 
 export function EventSamplesTable({
   events,
   isLoading,
+  onFilterIp,
 }: {
   events?: EventSample[]
   isLoading: boolean
+  /** Optional: clicking a client IP filters the table by it. */
+  onFilterIp?: (ip: string) => void
 }) {
   return (
     <Table>
@@ -28,6 +37,7 @@ export function EventSamplesTable({
         <TR>
           <TH>Time</TH>
           <TH>Client IP</TH>
+          <TH>Repeat</TH>
           <TH>Method</TH>
           <TH>Path</TH>
           <TH>Status</TH>
@@ -57,16 +67,22 @@ export function EventSamplesTable({
             <TR key={e.eventId} className="hover:bg-surface-2/50">
               <TD className="whitespace-nowrap text-xs text-muted">{formatTimestamp(e.timestamp)}</TD>
               <TD className="font-mono text-xs">
-                <span className="flex items-center gap-1.5">
-                  {e.clientIp}
-                  {e.repeatOffender && (
-                    <span
-                      title="Repeat offender"
-                      className="inline-block h-1.5 w-1.5 rounded-full bg-action-deny"
-                    />
-                  )}
-                </span>
-                {e.geoCountry && <span className="ml-0 text-[10px] text-muted">{e.geoCountry}</span>}
+                {onFilterIp ? (
+                  <button
+                    type="button"
+                    onClick={() => onFilterIp(e.clientIp)}
+                    className="text-fg underline-offset-2 hover:text-accent hover:underline"
+                    title={`Filter by ${e.clientIp}`}
+                  >
+                    {e.clientIp}
+                  </button>
+                ) : (
+                  e.clientIp
+                )}
+                {e.geoCountry && <span className="ml-1.5 text-[10px] text-muted">{e.geoCountry}</span>}
+              </TD>
+              <TD>
+                <RepeatOffenderBadge value={e.repeatOffender} />
               </TD>
               <TD>
                 <Badge>{e.method}</Badge>
